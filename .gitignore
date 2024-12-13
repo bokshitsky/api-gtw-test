@@ -1,0 +1,18 @@
+.vscode
+secure/
+.svn/
+.idea/
+deploy-dev.iml
+/.project
+*.swp
+*.swo
+*.pyc
+.autodeploy.log
+.idea
+.cache/
+.mypy_cache
+.ruff_cache
+# ansible-runner dirs
+artifacts
+env
+deploy.iml
