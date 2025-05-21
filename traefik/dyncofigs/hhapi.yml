@@ -1,0 +1,40 @@
+http:
+  routers:
+    hhapi-manual:
+      rule: "PathPrefix(`/hhapi`)"
+      service: "hhapi@consulcatalog"
+      middlewares:
+        - "strip-hhapi-prefix"
+        - "session"
+        - "session2"
+
+    session-manual:
+      rule: "Host(`session.internal`)"
+      service: "auth_app"
+
+  services:
+    auth_app:
+      loadBalancer:
+        servers:
+          - url: "http://host.docker.internal:8000"
+
+  middlewares:
+    strip-hhapi-prefix:
+      stripPrefix:
+        prefixes:
+          - "/hhapi"
+    session:
+      forwardAuth:
+        address: "http://host.docker.internal:8000/session_auth"
+        authResponseHeaders:
+          - "x-hh-session"
+    session2:
+      forwardAuth:
+        address: "http://host.docker.internal:8000/session_auth2"
+        authResponseHeaders:
+          - "x-hh-session2"
+
+
+  #    session-example:
+  #      rule: "Host(`session.internal.host`)"
+  #      service: "auth_app"

@@ -1,0 +1,32 @@
+global:
+  checkNewVersion: false
+  sendAnonymousUsage: false
+
+log:
+  level: DEBUG
+
+api:
+  dashboard: true
+
+providers:
+#  consul:
+#    endpoints:
+#      - "http://at7.pyn.ru:13100/"
+#    namespaces:
+#      - "at7"
+
+  consulCatalog:
+    exposedByDefault: false
+    endpoint:
+      address: at7.pyn.ru:13100
+      scheme: http
+    watch: true
+
+  file:
+    directory: /etc/traefik/dyncofigs
+    watch: true
+
+
+entryPoints:
+  web:
+    address: :8080
